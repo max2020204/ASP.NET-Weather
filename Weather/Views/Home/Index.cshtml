@@ -1,0 +1,80 @@
+﻿@model WeatherModel
+<div class="container-fluid px-1 px-sm-3 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="row card0 mt-4 mb-4">
+            <div class="card1 col-lg-8 col-md-7">
+                <div class="text-center"> <img class="image mt-5" src="https://i.imgur.com/M8VyA2h.png"> </div>
+                <div class="row px-3 mt-3 mb-3">
+                    <h1 class="large-font mr-3">@Model.temp&#176;</h1>
+                    <div class="d-flex flex-column mr-3">
+                        <h2 class="mt-3 mb-0">@Model.name</h2> <small>@Model.Now</small>
+                    </div>
+                    <div class="d-flex flex-column text-center">
+                      <img height="55" width="55" src="https://openweathermap.org/img/wn/@Model.icon@@2x.png" alt="AlternateText"><small>@Model.description</small>
+                    </div>
+                </div>
+            </div>
+            <div class="card2 col-lg-4 col-md-5">
+                <form asp-controller="Home" method="post">
+                    <div class="row px-3">
+                        <input type="text" name="location" placeholder="Another location" class="mb-5">
+                        <button type="submit" class="fa fa-search mb-5 mr-0 text-center"></button>
+                    </div>
+                </form>
+                <div class="mr-5">
+                    <div class="line my-sm-2"></div>
+                    <p>@Model.name</p>
+                    <div class="row px-3">
+                        <p class="light-text">Sunrise</p>
+                        <p class="ml-auto">@Model.sunrise</p>
+                    </div>
+                    <div class="row px-3">
+                        <p class="light-text">Sunset</p>
+                        <p class="ml-auto">@Model.sunset</p>
+                    </div>
+                    <div class="row px-3">
+                        <p class="light-text">Lat</p>
+                        <p class="ml-auto">@Model.lat</p>
+                    </div>
+                    <div class="row px-3">
+                        <p class="light-text">Lon</p>
+                        <p class="ml-auto">@Model.lon</p>
+                    </div>
+                    <div class="line my-sm-2"></div>
+                    <p>Weather Details</p>
+
+                    <div class="row px-3">
+                        <p class="light-text">Feel likes</p>
+                        <p class="ml-auto">@Model.feels_like</p>
+                    </div>
+                    <div class="row px-3">
+                        <p class="light-text">Maximum temperature</p>
+                        <p class="ml-auto">@Model.temp_max</p>
+                    </div>
+                    <div class="row px-3">
+                        <p class="light-text">Minimum temperature</p>
+                        <p class="ml-auto">@Model.temp_min</p>
+                    </div>
+                    <div class="row px-3">
+                        <p class="light-text">Cloudy</p>
+                        <p class="ml-auto" @Model.Clouds %</p>
+                    </div>
+                    <div class="row px-3">
+                        <p class="light-text">Humidity</p>
+                        <p class="ml-auto">@Model.humidity%</p>
+                    </div>
+                    <div class="row px-3">
+                        <p class="light-text">Wind</p>
+                        <p class="ml-auto">@Model.WindSpeed km/h</p>
+
+                    </div>
+                    <div class="row px-3">
+                        <p class="light-text">Wind deg</p>
+                        <p class="ml-auto">@Model.WindDeg</p>
+                    </div>
+                    <div class="line mt-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
