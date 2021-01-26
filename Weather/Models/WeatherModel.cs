@@ -11,6 +11,7 @@ namespace Weather.Models
         public DateTime Now { get; set; }
         public double lat { get; set; }
         public string description { get; set; }
+        public double visibility { get; set; }
         public string icon { get; set; }
         public double temp { get; set; }
         public double feels_like { get; set; }
@@ -21,8 +22,8 @@ namespace Weather.Models
         public double WindSpeed { get; set; }
         public int WindDeg { get; set; }
         public int Clouds { get; set; }
-        public DateTime sunrise { get; set; }
-        public DateTime sunset { get; set; }
+        public string sunrise { get; set; }
+        public string sunset { get; set; }
         public string name { get; set; }
     }
 }

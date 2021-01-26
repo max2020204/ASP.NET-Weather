@@ -36,8 +36,10 @@ namespace Weather.Controllers
             WeatherModel weather = new WeatherModel
             {
                 lon = JsonWeather.Coord.Lon,
+                pressure = JsonWeather.Main.Pressure,
                 icon = JsonWeather.Weather[0].Icon,
                 Now = DateTime.Now,
+                visibility = JsonWeather.Visibility,
                 lat = JsonWeather.Coord.Lat,
                 description = JsonWeather.Weather[0].Description,
                 temp = JsonWeather.Main.Temp,
@@ -48,8 +50,8 @@ namespace Weather.Controllers
                 WindSpeed = JsonWeather.Wind.Speed,
                 name = JsonWeather.Name,
                 Clouds = JsonWeather.Clouds.All,
-                sunrise = UnixTimeStampToDateTime(JsonWeather.Sys.Sunrise),
-                sunset = UnixTimeStampToDateTime(JsonWeather.Sys.Sunset),
+                sunrise = UnixTimeStampToDateTime(JsonWeather.Sys.Sunrise).ToString("HH:MM"),
+                sunset = UnixTimeStampToDateTime(JsonWeather.Sys.Sunset).ToString("HH:MM"),
             };
             return View(weather);
         }
