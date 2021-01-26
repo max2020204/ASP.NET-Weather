@@ -20,8 +20,8 @@ namespace Weather.Controllers
         {
             _logger = logger;
         }
-        
-       [HttpPost, HttpGet]
+
+        [HttpPost, HttpGet]
         public IActionResult Index(string location)
         {
             if (location == null)
@@ -33,25 +33,29 @@ namespace Weather.Controllers
                 string s = web.DownloadString($"https://api.openweathermap.org/data/2.5/weather?q={location}&units=metric&appid=5672206b5ff40a5b87886276db8fe0f0");
                 JsonWeather = JsonConvert.DeserializeObject<Root>(s);
             }
+            long sunrise = JsonWeather.Sys.Sunrise + JsonWeather.Timezone;
+            long sunset = JsonWeather.Sys.Sunset + JsonWeather.Timezone;
+            int humadity = JsonWeather.Main.Humidity;
             WeatherModel weather = new WeatherModel
             {
                 lon = JsonWeather.Coord.Lon,
+                humidity = JsonWeather.Main.Humidity,
                 pressure = JsonWeather.Main.Pressure,
                 icon = JsonWeather.Weather[0].Icon,
                 Now = DateTime.Now,
                 visibility = JsonWeather.Visibility,
                 lat = JsonWeather.Coord.Lat,
                 description = JsonWeather.Weather[0].Description,
-                temp = JsonWeather.Main.Temp,
-                feels_like = JsonWeather.Main.FeelsLike,
-                temp_max = JsonWeather.Main.TempMax,
-                temp_min = JsonWeather.Main.TempMin,
+                temp =Convert.ToInt32( JsonWeather.Main.Temp),
+                feels_like = Convert.ToInt32(JsonWeather.Main.FeelsLike),
+                temp_max = Convert.ToInt32(JsonWeather.Main.TempMax),
+                temp_min = Convert.ToInt32(JsonWeather.Main.TempMin),
                 WindDeg = JsonWeather.Wind.Deg,
                 WindSpeed = JsonWeather.Wind.Speed,
                 name = JsonWeather.Name,
                 Clouds = JsonWeather.Clouds.All,
-                sunrise = UnixTimeStampToDateTime(JsonWeather.Sys.Sunrise).ToString("HH:MM"),
-                sunset = UnixTimeStampToDateTime(JsonWeather.Sys.Sunset).ToString("HH:MM"),
+                sunrise = DateTimeOffset.FromUnixTimeSeconds(sunrise).Hour.ToString() + ":" + DateTimeOffset.FromUnixTimeSeconds(sunrise).Minute.ToString(),
+                sunset = DateTimeOffset.FromUnixTimeSeconds(sunset).Hour.ToString() + ":" + DateTimeOffset.FromUnixTimeSeconds(sunset).Minute.ToString(),
             };
             return View(weather);
         }
@@ -59,13 +63,6 @@ namespace Weather.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
-        {
-            // Unix timestamp is seconds past epoch
-            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            return dtDateTime;
         }
     }
 }
